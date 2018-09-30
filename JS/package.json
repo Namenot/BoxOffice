@@ -1,5 +1,5 @@
 {
-  "name": "BoxOfficeBot",
+  "name": "BoxOffice-Bot",
   "version": "0.0.1",
   "description": "A simple Bot for a movie voting system",
   "main": "bot.js",
