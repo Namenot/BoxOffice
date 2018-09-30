@@ -2,10 +2,10 @@
   "name": "BoxOfficeBot",
   "version": "0.0.1",
   "description": "A simple Bot for a movie voting system",
-  "main": "main.js",
+  "main": "bot.js",
   "author": "Error404",
   "dependencies": {
-    "discord.io": "^2.5.3",
-    "winston": "^3.1.0"
+  "discord.io": "^2.5.3",
+  "winston": "^3.1.0"
   }
 }
