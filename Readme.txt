@@ -7,5 +7,5 @@ Invite Link        : https://discordapp.com/oauth2/authorize?client_id=495951154
 dependencies : npm install discord.io winston --save
                npm install https://github.com/woor/discord.io/tarball/gateway_v6
 
-start bot : > cd Desktop\KNN-Neu\BoxOffice
+start bot : > cd Desktop\KNN-Neu\BoxOffice            //the path were bot.js lies within 
             > node bot.js
