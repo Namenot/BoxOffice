@@ -8,10 +8,22 @@ token = "NDk1OTUxMTU0NjczNjE0ODQ4.DpJiyQ.5NgmMJVfjshxVLt0eBna4ndVVt0"
 
 bot = commands.Bot(command_prefix = '>', description='A Bot that manages a voting system for a movie night.')
 
-voting = ['Movie 1', 'Movie 2', 'Movie 3']
-votes = [3, 10, 50]
+voting = []
+votes = []
 vote = 0
 
+def checkspaces(a):
+    nos = 10 #number of spaces
+    nos -= len(a)
+
+    if nos >=0:
+        while 
+
+
+    return strg
+
+
+##here beginns the discord stuff
 @bot.event
 async def on_ready():
     print("--------------")
@@ -19,6 +31,15 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print("--------------")
+
+@bot.event
+async def on_message(msg):
+    global voting
+    global votes
+    if msg.content.startswith('>bnominate'):
+        voting.append(msg[11:]) ##check the IMdB database
+        votes.append(0)
+
 
 @bot.command(pass_context=True)
 @has_permissions(administrator=True)
@@ -57,8 +78,6 @@ async def bhelp(ctx):
     strg += "bnominate : let's you nominate a Movie\n"
     strg += "bhelp     : DUH\n```"
     await ctx.send(strg)
-
-@bot.
 
 @bot.command()
 async def info(ctx):
