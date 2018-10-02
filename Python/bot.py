@@ -54,7 +54,7 @@ async def start(ctx):
     global votes
 
     del voters[:] = [] #empties every list that already exists
-    del voting[:] = [] #(prevents old votes to be inherrited)
+    del voting[:] = [] #(prevents old votes to be inherited)
     del votes [:] = []
 
     vote = 1
