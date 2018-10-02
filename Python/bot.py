@@ -49,6 +49,14 @@ async def nominate(ctx, *,msg: str):
 @has_permissions(administrator=True)
 async def start(ctx):
     global vote
+    global voters
+    global voting
+    global votes
+
+    del voters[:] = [] #empties every list that already exists
+    del voting[:] = [] #(prevents old votes to be inherrited)
+    del votes [:] = []
+
     vote = 1
     await ctx.send("```Voting has begun```")
 
@@ -131,7 +139,5 @@ async def binfo(ctx):
 
 bot.run(token)
 
-
-#misses a function that regulates, that everyone can vote multiple times
 #misses a function that can search a movie data base, to check whether the
 #       nominated movie exists
