@@ -27,3 +27,11 @@ and the discord.py library installed.
   ⦿ discord.py (https://pypi.org/project/discord.py/)
 
 You can install discord.py via : pip install discord.py
+
+the bot requires following permission value : 223232
+
+to invite the bot to your sever just use this link :
+*----------------------------------------------------------------------------------------------------*
+* https://discordapp.com/oauth2/authorize?client_id=YOUR_BOTS_CLIENT_ID&scope=bot&permissions=223232 *
+*----------------------------------------------------------------------------------------------------*
+IMPORTANT : don't forget to replace YOUR_BOTS_CLIENT_ID in the URL
