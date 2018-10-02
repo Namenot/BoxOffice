@@ -1,0 +1,18 @@
+COMMANDS:
+-------------------------------------
+
+1) start    : starts the voting process(ADMIN only)
+2) stop     : stops the voting process(ADMIN only)
+3) binfo    : gives you details about the current vote in progress
+4) votefor  : let's you vote for a nominated Movie
+5) nominate : let's you nominate a Movie
+6) bhelp    : DUH
+
+each and every command must start with 'b!' for 'b!' is the trigger to execute a
+command
+
+auth.py
+-------------------------------------
+
+auth.py contains some changeable values
+it's necessary, that your Bots token is placed in here

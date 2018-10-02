@@ -108,8 +108,8 @@ async def votefor(ctx, a: int):
 async def bhelp(ctx):
     strg  = "```The following commands are currently available:\n"
     strg += "----------------------------------------------\n"
-    strg += "start    : starts the voting process(**_ADMIN_** only)\n"
-    strg += "stop     : stops the voting process(**_ADMIN_** only)\n"
+    strg += "start    : starts the voting process(ADMIN only)\n"
+    strg += "stop     : stops the voting process(ADMIN only)\n"
     strg += "binfo    : gives you details about the current vote in progress\n"
     strg += "votefor  : let's you vote for a nominated Movie\n"
     strg += "nominate : let's you nominate a Movie\n"
