@@ -53,9 +53,9 @@ async def start(ctx):
     global voting
     global votes
 
-    del voters[:] = [] #empties every list that already exists
-    del voting[:] = [] #(prevents old votes to be inherited)
-    del votes [:] = []
+    del voters[:] #empties every list that already exists
+    del voting[:] #(prevents old votes to be inherited)
+    del votes [:]
 
     vote = 1
     await ctx.send("```Voting has begun```")
@@ -138,6 +138,9 @@ async def binfo(ctx):
         await ctx.send("```Voting is not in progress```")
 
 bot.run(token)
+
+#voting should also be able via name (close enough names should exists too)
+#       e.g. Terminator is nominated and Tremi should be a vote for it
 
 #misses a function that can search a movie data base, to check whether the
 #       nominated movie exists
