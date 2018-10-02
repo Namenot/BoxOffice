@@ -1,15 +1,20 @@
-def checkspaces(a):
-    nos = 30 #number of spaces
-    nos -= len(a)
-    if nos >=0:
-        strg = a
-        for a in range(nos+5):
-            strg += " "
-    else:
-        strg = a[:nos]
-        strg += "...  "
-    return strg
+import auth as au
+import utilities as u
+
+voting = ["JO"]
+
+def doublicates(newM):
+    return newM not in voting
+
+print(doublicates("JO"))
+
+i = 0
+if not i:
+    print(not i == 1)
+
+print("token : ", au.token)
+
 
 a = "Hallo Darkness my old friend, I've come to talk with you again"
-b = checkspaces(a)
+b = u.checkspaces(a)
 print(b)
