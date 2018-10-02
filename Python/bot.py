@@ -1,5 +1,5 @@
 import auth as au
-import utillities as u
+import utilities as u
 import discord
 from discord import Member
 from discord.ext import commands
@@ -10,11 +10,12 @@ token = au.token
 bot = commands.Bot(command_prefix = 'b!', description='A Bot that manages a voting system for a movie night.')
 
 voting = []
-votes = []
-vote = 0
+votes  = []
+voters = []
+vote   = 0
 
-def doublicates(newM):
-    return newM not in voting
+def doublicates(newM, lst):
+    return newM not in lst
 
 ##here beginns the discord stuff
 @bot.event
@@ -30,7 +31,7 @@ async def nominate(ctx, *,msg: str):
     global voting
     global votes
     if vote:
-        if doublicates(msg):
+        if doublicates(msg, voting):
             voting.append(msg) ##check the IMdB database
             votes.append(0)
             strg  = "``` You nominated "
@@ -62,7 +63,6 @@ async def stop(ctx):
     await ctx.send("```Voting has ended```")
     #determin the winner
     votes, voting = zip(*sorted(zip(votes, voting)))
-    print(voting)
     strg  = "```The winner is...\n"
     strg += voting[len(voting)-1]
     strg += "\nwith "
@@ -74,18 +74,24 @@ async def stop(ctx):
 
 
 
-@bot.command()
+@bot.command(pass_context=True)
 async def votefor(ctx, a: int):
+    author = ctx.message.author.name
     global votes
+    global voters
     if vote:
-        if a <= len(votes) and a > 0:
-            votes[a-1] +=1
-            strg  = "```You voted for "
-            strg += voting[a-1]
-            strg += "```"
-            await ctx.send(strg)
+        if doublicates(author, voters):
+            voters.append(author)
+            if a <= len(votes) and a > 0:
+                votes[a-1] +=1
+                strg  = "```You voted for "
+                strg += voting[a-1]
+                strg += "```"
+                await ctx.send(strg)
+            else:
+                await ctx.send("```Error: vote out of range```")
         else:
-            await ctx.send("```Error :vote out of range```")
+            await ctx.send("```Error: You've already voted```")
     else:
         await ctx.send("```Voting is not in progress```")
     #here I still need a system to track all votes
