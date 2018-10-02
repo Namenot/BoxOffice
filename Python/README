@@ -16,3 +16,14 @@ auth.py
 
 auth.py contains some changeable values
 it's necessary, that your Bots token is placed in here
+
+-------------------------------------
+
+It's necessary that the system running this bot has python 3.4(or higher), pip
+and the discord.py library installed.
+
+  ⦿ Python3    (https://www.python.org/)
+  ⦿ Pip        (https://pypi.org/)
+  ⦿ discord.py (https://pypi.org/project/discord.py/)
+
+You can install discord.py via : pip install discord.py
