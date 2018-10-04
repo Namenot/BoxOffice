@@ -1,3 +1,4 @@
+import sys
 import auth as au
 import utilities as u
 import discord
@@ -12,10 +13,16 @@ bot = commands.Bot(command_prefix = 'b!', description='A Bot that manages a voti
 voting = []
 votes  = []
 voters = []
-vote   = 0
+allowvote   = 0
 
-def doublicates(newM, lst):
+def nodoublicates(newM, lst):
     return newM not in lst
+
+def test2Dpos(newM, lst):
+    for x in range(len(lst)):
+        if newM in lst[x][0]:
+            return x
+    return -1
 
 ##here beginns the discord stuff
 @bot.event
@@ -27,14 +34,23 @@ async def on_ready():
     print("--------------")
 
 @bot.command()
+@has_permissions(administrator=True)
+async def end(ctx):
+    await ctx.send("```Shuting down the Bot```")
+    sys.exit()
+
+@bot.command(pass_context=True)
 async def nominate(ctx, *,msg: str):
     global voting
     global votes
-    if vote:
-        if doublicates(msg, voting):
+    author = ctx.message.author.name
+    if allowvote:
+        if nodoublicates(msg, voting):
             voting.append(msg) ##check the IMdB database
             votes.append(0)
-            strg  = "``` You nominated "
+            strg  = "```"
+            strg += author
+            strg += " nominated "
             strg += msg
             strg += "```"
         else:
@@ -48,7 +64,7 @@ async def nominate(ctx, *,msg: str):
 @bot.command(pass_context=True)
 @has_permissions(administrator=True)
 async def start(ctx):
-    global vote
+    global allowvote
     global voters
     global voting
     global votes
@@ -57,17 +73,17 @@ async def start(ctx):
     del voting[:] #(prevents old votes to be inherited)
     del votes [:]
 
-    vote = 1
+    allowvote = 1
     await ctx.send("```Voting has begun```")
 
 
 @bot.command(pass_context=True)
 @has_permissions(administrator=True)
 async def stop(ctx):
-    global vote
+    global allowvote
     global voting
     global votes
-    vote = 0
+    allowvote = 0
     await ctx.send("```Voting has ended```")
     #determin the winner
     votes, voting = zip(*sorted(zip(votes, voting)))
@@ -83,26 +99,66 @@ async def stop(ctx):
 
 
 @bot.command(pass_context=True)
-async def votefor(ctx, a: int):
+async def votefor(ctx, a):
+
+    strg = ""
+
     author = ctx.message.author.name
+    vote   = [None]*2
+
+    vote[0] = author
+
     global votes
     global voters
-    if vote:
-        if doublicates(author, voters):
-            voters.append(author)
+    if allowvote:
+        if nodoublicates(author, voters):
+            if a.isdigit():
+                a = int(a)
+            else:
+                match = [s for s in voting if a in s]
+                if len(match) == 1:
+                    pos = [i for i, x in enumerate(voting) if x == match[0]]
+                    a = pos[0] + 1
+                else:
+                    a = 0
+                    strg = "```Could select a Movie, as the given name was not specific enough```"
+
             if a <= len(votes) and a > 0:
+                vote[1] = a
+                voters.append(vote)
                 votes[a-1] +=1
-                strg  = "```You voted for "
+                strg  = "```"
+                strg += author
+                strg += "voted for "
                 strg += voting[a-1]
                 strg += "```"
-                await ctx.send(strg)
+            elif a == 0:
+                pass
             else:
-                await ctx.send("```Error: vote out of range```")
+                strg = "```Error: vote out of range```"
+
+            await ctx.send(strg)
         else:
             await ctx.send("```Error: You've already voted```")
     else:
         await ctx.send("```Voting is not in progress```")
-    #here I still need a system to track all votes
+
+@bot.command(pass_context=True)
+async def rmvote(ctx):
+    global voters
+    global votes
+    author = ctx.message.author.name
+    pos = test2Dpos(author, voters)
+    if pos != -1:
+        item = voters[pos][1] - 1
+        votes[item] -= 1
+        del voters[pos]
+        strg = "```"
+        strg += author
+        strg += " removed their vote```"
+        await ctx.send(strg)
+    else:
+        await ctx.send("```Error: You didn't vote yet```")
 
 @bot.command()
 async def bhelp(ctx):
@@ -112,8 +168,10 @@ async def bhelp(ctx):
     strg += "stop     : stops the voting process(ADMIN only)\n"
     strg += "binfo    : gives you details about the current vote in progress\n"
     strg += "votefor  : let's you vote for a nominated Movie\n"
+    strg += "rmvote   : removes your vote\n"
     strg += "nominate : let's you nominate a Movie\n"
-    strg += "bhelp    : DUH\n```"
+    strg += "bhelp    : DUH\n"
+    strg += "end      : shuts down the Bot(ADMIN only)```\n"
     await ctx.send(strg)
 
 @bot.command()
@@ -139,8 +197,7 @@ async def binfo(ctx):
 
 bot.run(token)
 
-#voting should also be able via name (close enough names should exists too)
-#       e.g. Terminator is nominated and Tremi should be a vote for it
+#test rmvote function (+ everything else again for possible new errors)
 
 #misses a function that can search a movie data base, to check whether the
 #       nominated movie exists

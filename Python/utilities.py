@@ -1,5 +1,4 @@
 
-
 def checkspaces(a):
     nos = 30 #number of spaces
     nos -= len(a)

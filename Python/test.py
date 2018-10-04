@@ -1,20 +1,12 @@
-import auth as au
-import utilities as u
 
-voting = ["JO"]
+b = [['Hallo', 1]]
+match = 'Hallo'
 
-def doublicates(newM):
-    return newM not in voting
+if match in b[][0]:
+        print("YAY")
 
-print(doublicates("JO"))
-
-i = 0
-if not i:
-    print(not i == 1)
-
-print("token : ", au.token)
-
-
-a = "Hallo Darkness my old friend, I've come to talk with you again"
-b = u.checkspaces(a)
-print(b)
+def test2Dpos(newM, lst):
+    for x in range(len(lst)):
+        if newM in lst[x][0]:
+            return x
+    return -1

@@ -7,6 +7,7 @@ COMMANDS:
 4) votefor  : let's you vote for a nominated Movie
 5) nominate : let's you nominate a Movie
 6) bhelp    : DUH
+7) end      : shuts down the Bot(ADMIN only)
 
 each and every command must start with 'b!' for 'b!' is the trigger to execute a
 command
