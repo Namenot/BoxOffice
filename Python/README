@@ -1,14 +1,16 @@
 COMMANDS:
 -------------------------------------
 
-1) start    : starts the voting process(ADMIN only)
-2) stop     : stops the voting process(ADMIN only)
-3) end      : shuts down the Bot(ADMIN only)
-4) votefor  : let's you vote for a nominated Movie
-5) rmvote   : removes your vote
-6) nominate : let's you nominate a Movie
-7) bhelp    : DUH
-8) binfo    : gives you details about the current vote in progress
+1) startv   : starts the voting process(ADMIN only)
+2) startn   : starts the nomination process(ADMIN only)
+3) stop     : stops the voting process(ADMIN only)
+4) end      : shuts down the Bot(ADMIN only)
+5) binfo    : gives you details about the current vote in progress
+6) votefor  : let's you vote for a nominated Movie
+7) rmvote   : removes your vote
+8) nominate : let's you nominate a Movie
+9) bhelp    : gives you a list of every command + description of each
+
 
 each and every command must start with 'b!' for 'b!' is the trigger to execute a
 command

@@ -10,10 +10,11 @@ token = au.token
 
 bot = commands.Bot(command_prefix = 'b!', description='A Bot that manages a voting system for a movie night.')
 
-voting = []
-votes  = []
-voters = []
-allowvote   = 0
+voting = [] #movies that are nominated
+votes  = [] #the votes each movie has
+voters = [] #authors and their respective votes
+allowvote     = 0
+allownominate = 0
 
 def nodoublicates(newM, lst):
     return newM not in lst
@@ -44,7 +45,7 @@ async def nominate(ctx, *,msg: str):
     global voting
     global votes
     author = ctx.message.author.name
-    if allowvote:
+    if allownominate:
         if nodoublicates(msg, voting):
             voting.append(msg) ##check the IMdB database
             votes.append(0)
@@ -63,19 +64,34 @@ async def nominate(ctx, *,msg: str):
 
 @bot.command(pass_context=True)
 @has_permissions(administrator=True)
-async def start(ctx):
+async def startv(ctx):
     global allowvote
+    global allownominate
     global voters
-    global voting
     global votes
 
-    del voters[:] #empties every list that already exists
+    if voting:
+        allowvote = 1
+        allownominate = 0
+        await ctx.send("```Nominating has ended```")
+        await ctx.send("```Voting has begun```")
+    else:
+        await ctx.send("```The Voting process can not be started without any Movies beeing nominated```")
+
+@bot.command(pass_context=True)
+@has_permissions(administrator=True)
+async def startn(ctx):
+    global voting
+    global allowvote
+    global allownominate
+
     del voting[:] #(prevents old votes to be inherited)
     del votes [:]
+    del voters[:] #empties every list that already exists
 
-    allowvote = 1
-    await ctx.send("```Voting has begun```")
-
+    allowvote = 0
+    allownominate = 1
+    await ctx.send("```Nomination process has started```")
 
 @bot.command(pass_context=True)
 @has_permissions(administrator=True)
@@ -136,6 +152,9 @@ async def votefor(ctx, a):
                 pass
             else:
                 strg = "```Error: vote out of range```"
+                print("a     : ", a)
+                print("votes :", votes)
+                print("voting:", voting)
 
             await ctx.send(strg)
         else:
@@ -147,31 +166,35 @@ async def votefor(ctx, a):
 async def rmvote(ctx):
     global voters
     global votes
-    author = ctx.message.author.name
-    pos = test2Dpos(author, voters)
-    if pos != -1:
-        item = voters[pos][1] - 1
-        votes[item] -= 1
-        del voters[pos]
-        strg = "```"
-        strg += author
-        strg += " removed their vote```"
-        await ctx.send(strg)
+    if allowvote:
+        author = ctx.message.author.name
+        pos = test2Dpos(author, voters)
+        if pos != -1:
+            item = voters[pos][1] - 1
+            votes[item] -= 1
+            del voters[pos]
+            strg = "```"
+            strg += author
+            strg += " removed their vote```"
+            await ctx.send(strg)
+        else:
+            await ctx.send("```Error: You didn't vote yet```")
     else:
-        await ctx.send("```Error: You didn't vote yet```")
+        await ctx.send("```Error: Voting is not possible at the moment")
 
 @bot.command()
 async def bhelp(ctx):
     strg  = "```The following commands are currently available:\n"
     strg += "----------------------------------------------\n"
-    strg += "start    : starts the voting process(ADMIN only)\n"
+    strg += "startv   : starts the voting process(ADMIN only)\n"
+    strg += "startn   : starts the nomination process(ADMIN only)\n"
     strg += "stop     : stops the voting process(ADMIN only)\n"
+    strg += "end      : shuts down the Bot(ADMIN only)```\n"
     strg += "binfo    : gives you details about the current vote in progress\n"
     strg += "votefor  : let's you vote for a nominated Movie\n"
     strg += "rmvote   : removes your vote\n"
     strg += "nominate : let's you nominate a Movie\n"
-    strg += "bhelp    : DUH\n"
-    strg += "end      : shuts down the Bot(ADMIN only)```\n"
+    strg += "bhelp    : gives you a list of every command + description of each, duh!\n"
     await ctx.send(strg)
 
 @bot.command()
