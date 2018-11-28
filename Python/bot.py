@@ -185,16 +185,24 @@ async def rmvote(ctx):
 @bot.command()
 async def bhelp(ctx):
     strg  = "```The following commands are currently available:\n"
-    strg += "----------------------------------------------\n"
-    strg += "startv   : starts the voting process(ADMIN only)\n"
-    strg += "startn   : starts the nomination process(ADMIN only)\n"
-    strg += "stop     : stops the voting process(ADMIN only)\n"
-    strg += "end      : shuts down the Bot(ADMIN only)```\n"
+    #strg += "------------------------------------------------------------------------\n"
+
+    strg += "\nAdmin Commands:\n"
+    strg += "------------------------------------------------------------------------\n"
+    strg += "startv   : starts the voting process\n"
+    strg += "startn   : starts the nomination process\n"
+    strg += "stop     : stops the voting process\n"
+    strg += "end      : shuts the Bot down\n"
+    strg += "------------------------------------------------------------------------\n"
+
+    strg += "\nUser Commands:\n"
+    strg += "------------------------------------------------------------------------\n"
     strg += "binfo    : gives you details about the current vote in progress\n"
     strg += "votefor  : let's you vote for a nominated Movie\n"
     strg += "rmvote   : removes your vote\n"
-    strg += "nominate : let's you nominate a Movie\n"
+    strg += "nominate : lets you nominate a Movie\n"
     strg += "bhelp    : gives you a list of every command + description of each, duh!\n"
+    strg += "------------------------------------------------------------------------\n```"
     await ctx.send(strg)
 
 @bot.command()
